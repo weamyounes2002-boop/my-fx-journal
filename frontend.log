@@ -1,0 +1,41 @@
+
+> shadcnui@0.0.0 dev /workspace/shadcn-ui
+> vite
+
+
+  VITE v5.4.21  ready in 289 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://100.95.87.55:5173/
+Error: The following dependencies are imported but could not be resolved:
+
+  qrcode.react (imported by /workspace/shadcn-ui/src/pages/ProfileSettings.tsx)
+  canvas-confetti (imported by /workspace/shadcn-ui/src/pages/Goals.tsx)
+  @radix-ui/react-alert-dialog (imported by /workspace/shadcn-ui/src/components/ui/alert-dialog.tsx)
+  papaparse (imported by /workspace/shadcn-ui/src/components/ExportDialog.tsx)
+  @radix-ui/react-scroll-area (imported by /workspace/shadcn-ui/src/components/ui/scroll-area.tsx)
+
+Are they installed?
+    at file:///workspace/shadcn-ui/node_modules/.pnpm/vite@5.4.21_@types+node@22.19.1_terser@5.44.1/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:50669:15
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///workspace/shadcn-ui/node_modules/.pnpm/vite@5.4.21_@types+node@22.19.1_terser@5.44.1/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:50174:26
+4:05:14 PM [vite] Internal server error: [postcss] Cannot find module '@tailwindcss/aspect-ratio'
+Require stack:
+- /workspace/shadcn-ui/tailwind.config.ts
+  Plugin: vite:css
+  File: /workspace/shadcn-ui/index.html?html-proxy&direct&index=0.css:undefined:NaN
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1144:15)
+      at Function.resolve (node:internal/modules/helpers:187:19)
+      at _resolve (/workspace/shadcn-ui/node_modules/.pnpm/jiti@1.21.7/node_modules/jiti/dist/jiti.js:1:246378)
+      at jiti (/workspace/shadcn-ui/node_modules/.pnpm/jiti@1.21.7/node_modules/jiti/dist/jiti.js:1:249092)
+      at /workspace/shadcn-ui/tailwind.config.ts:3:20
+      at evalModule (/workspace/shadcn-ui/node_modules/.pnpm/jiti@1.21.7/node_modules/jiti/dist/jiti.js:1:251913)
+      at jiti (/workspace/shadcn-ui/node_modules/.pnpm/jiti@1.21.7/node_modules/jiti/dist/jiti.js:1:249841)
+      at /workspace/shadcn-ui/node_modules/.pnpm/tailwindcss@3.4.18/node_modules/tailwindcss/lib/lib/load-config.js:53:30
+      at loadConfig (/workspace/shadcn-ui/node_modules/.pnpm/tailwindcss@3.4.18/node_modules/tailwindcss/lib/lib/load-config.js:55:6)
+      at getTailwindConfig (/workspace/shadcn-ui/node_modules/.pnpm/tailwindcss@3.4.18/node_modules/tailwindcss/lib/lib/setupTrackingContext.js:74:116)
+4:05:14 PM [vite] Pre-transform error: [postcss] Cannot find module '@tailwindcss/aspect-ratio'
+Require stack:
+- /workspace/shadcn-ui/tailwind.config.ts
+Killed
+ ELIFECYCLE  Command failed with exit code 137.

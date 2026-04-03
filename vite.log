@@ -1,0 +1,11 @@
+
+> shadcnui@0.0.0 dev /workspace/shadcn-ui
+> vite
+
+
+  VITE v5.4.21  ready in 304 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://100.69.246.255:5173/
+Killed
+ ELIFECYCLE  Command failed with exit code 137.

@@ -1,0 +1,15 @@
+
+> shadcnui@0.0.0 server /workspace/shadcn-ui
+> node server/index.cjs
+
+[Server] Environment variables loaded:
+[Server] VITE_SUPABASE_URL: ✓ Set
+[Server] VITE_SUPABASE_ANON_KEY: ✓ Set
+[Server] METAAPI_TOKEN: ✓ Set
+[MetaAPI Routes] Initializing Supabase...
+[MetaAPI Routes] URL: https://mctcmjnirsxrywvwzpzu.supabase.co
+[MetaAPI Routes] Key length: 208
+[MetaAPI Routes] ✓ Supabase client initialized successfully
+🚀 MetaAPI Backend Server running on http://localhost:3001
+📊 Health check: http://localhost:3001/health
+🔌 MetaAPI routes: http://localhost:3001/api/metaapi/*

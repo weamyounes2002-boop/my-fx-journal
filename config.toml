@@ -1,0 +1,13 @@
+# Supabase Edge Functions Configuration
+
+[functions.metaapi-connect]
+verify_jwt = true
+
+[functions.metaapi-sync]
+verify_jwt = true
+
+[functions.metaapi-disconnect]
+verify_jwt = true
+
+[functions.metaapi-status]
+verify_jwt = true
