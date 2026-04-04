@@ -7,6 +7,9 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
+const METAAPI_PROVISIONING_BASE_URL =
+  Deno.env.get("METAAPI_PROVISIONING_BASE_URL") || "https://mt-provisioning-api-v1.agiliumtrade.ai";
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -90,7 +93,7 @@ serve(async (req) => {
     console.log("[metaapi-list-accounts] ========== FETCHING ACCOUNTS FROM METAAPI ==========");
     
     // Fetch existing accounts from MetaAPI
-    const listAccountsUrl = "https://mt-provisioning-api-v1.agiliumtrade.ai/users/current/accounts";
+    const listAccountsUrl = `${METAAPI_PROVISIONING_BASE_URL}/users/current/accounts`;
     
     const response = await fetch(listAccountsUrl, {
       method: "GET",

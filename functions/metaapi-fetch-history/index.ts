@@ -6,8 +6,9 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const METAAPI_BASE_URL = 'https://mt-client-api-v1.agiliumtrade.agiliumtrade.ai';
-const METAAPI_PROVISIONING_URL = 'https://mt-provisioning-api-v1.agiliumtrade.agiliumtrade.ai';
+const METAAPI_BASE_URL = Deno.env.get('METAAPI_CLIENT_BASE_URL') || 'https://mt-client-api-v1.agiliumtrade.ai';
+const METAAPI_PROVISIONING_URL =
+  Deno.env.get('METAAPI_PROVISIONING_BASE_URL') || 'https://mt-provisioning-api-v1.agiliumtrade.ai';
 
 interface FetchHistoryRequest {
   account_id: string;
