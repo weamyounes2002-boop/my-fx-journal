@@ -16,6 +16,9 @@ interface ConnectRequest {
   broker_name: string;
 }
 
+const METAAPI_PROVISIONING_BASE_URL =
+  Deno.env.get("METAAPI_PROVISIONING_BASE_URL") || "https://mt-provisioning-api-v1.agiliumtrade.ai";
+
 // Helper function to trigger historical data sync
 async function triggerHistoricalDataSync(
   metaApiAccountId: string,
@@ -186,7 +189,7 @@ serve(async (req) => {
     console.log("[metaapi-connect] Creating MetaAPI account via REST API");
 
     // Step 1: Create MetaAPI account using REST API with correct required fields
-    const createAccountUrl = "https://mt-provisioning-api-v1.agiliumtrade.ai/users/current/accounts";
+    const createAccountUrl = `${METAAPI_PROVISIONING_BASE_URL}/users/current/accounts`;
     const accountPayload = {
       name: `${broker_name || "MT"} Account ${login_number}`,
       type: "cloud",
@@ -240,7 +243,7 @@ serve(async (req) => {
     // Step 2: Deploy the account
     console.log("[metaapi-connect] ========== METAAPI DEPLOYMENT ==========");
     console.log("[metaapi-connect] Deploying account");
-    const deployUrl = `https://mt-provisioning-api-v1.agiliumtrade.ai/users/current/accounts/${metaApiAccountId}/deploy`;
+    const deployUrl = `${METAAPI_PROVISIONING_BASE_URL}/users/current/accounts/${metaApiAccountId}/deploy`;
 
     const deployResponse = await fetch(deployUrl, {
       method: "POST",

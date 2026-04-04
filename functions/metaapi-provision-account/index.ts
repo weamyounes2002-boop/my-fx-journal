@@ -16,6 +16,46 @@ interface ProvisionAccountRequest {
   name?: string;
 }
 
+const METAAPI_PROVISIONING_BASE_URL =
+  Deno.env.get("METAAPI_PROVISIONING_BASE_URL") || "https://mt-provisioning-api-v1.agiliumtrade.ai";
+
+const textEncoder = new TextEncoder();
+
+function toHex(bytes: Uint8Array): string {
+  return Array.from(bytes)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+async function deriveEncryptionKey(secret: string): Promise<CryptoKey> {
+  const secretBytes = textEncoder.encode(secret);
+  const secretHash = await crypto.subtle.digest("SHA-256", secretBytes);
+  return crypto.subtle.importKey(
+    "raw",
+    secretHash,
+    { name: "AES-GCM", length: 256 },
+    false,
+    ["encrypt"],
+  );
+}
+
+async function encryptPassword(password: string): Promise<string> {
+  const secret = Deno.env.get("MT_PASSWORD_ENCRYPTION_KEY");
+  if (!secret) {
+    throw new Error("Server encryption key is not configured");
+  }
+
+  const key = await deriveEncryptionKey(secret);
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const encrypted = await crypto.subtle.encrypt(
+    { name: "AES-GCM", iv },
+    key,
+    textEncoder.encode(password),
+  );
+
+  return `${toHex(iv)}:${toHex(new Uint8Array(encrypted))}`;
+}
+
 // Helper function to trigger historical data sync
 async function triggerHistoricalDataSync(
   metaApiAccountId: string,
@@ -153,7 +193,7 @@ serve(async (req) => {
     }
 
     // Step 1: Create MetaAPI account
-    const provisionUrl = "https://mt-provisioning-api-v1.agiliumtrade.ai/users/current/accounts";
+    const provisionUrl = `${METAAPI_PROVISIONING_BASE_URL}/users/current/accounts`;
     
     const accountName = name || `${platform.toUpperCase()}-${login}`;
     const provisionPayload = {
@@ -208,7 +248,7 @@ serve(async (req) => {
     // Step 2: Deploy the account
     console.log("[metaapi-provision] ========== DEPLOYING ACCOUNT ==========");
     
-    const deployUrl = `https://mt-provisioning-api-v1.agiliumtrade.ai/users/current/accounts/${provisionData.id}/deploy`;
+    const deployUrl = `${METAAPI_PROVISIONING_BASE_URL}/users/current/accounts/${provisionData.id}/deploy`;
     
     const deployResponse = await fetch(deployUrl, {
       method: "POST",
@@ -232,9 +272,7 @@ serve(async (req) => {
     // Step 3: Store connection in database
     console.log("[metaapi-provision] ========== DATABASE INSERTION ==========");
     
-    // Simple encryption for password (base64 encoding)
-    // Note: For production, use proper encryption with a secret key
-    const encryptedPassword = btoa(password);
+    const encryptedPassword = await encryptPassword(password);
     
     const dbRecord = {
       user_id: user.id,

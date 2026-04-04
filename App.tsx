@@ -11,19 +11,13 @@ import { Loader2 } from 'lucide-react';
 // Eager load critical routes for faster initial render
 import Home from './pages/Home';
 import Login from './pages/Login';
-import Signup from './pages/Signup';
-import VerifyEmail from './pages/VerifyEmail';
+import NotFound from './pages/NotFound';
 
 // Lazy load non-critical routes to reduce initial bundle size
 const Dashboard = lazy(() => import('./pages/Index'));
-const TradingDashboard = lazy(() => import('./pages/TradingDashboard'));
-const TradeJournal = lazy(() => import('./pages/TradeJournal'));
-const PositionCalculator = lazy(() => import('./pages/PositionCalculator'));
 const Accounts = lazy(() => import('./pages/Accounts'));
 const Analytics = lazy(() => import('./pages/Analytics'));
 const Goals = lazy(() => import('./pages/Goals'));
-const Referral = lazy(() => import('./pages/Referral'));
-const ProfileSettings = lazy(() => import('./pages/ProfileSettings'));
 
 // Loading component with better UX
 const PageLoader = () => (
@@ -45,8 +39,8 @@ function AppRoutes() {
         {/* Public routes */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/signup" element={<Navigate to="/login" replace />} />
+        <Route path="/verify-email" element={<Navigate to="/dashboard" replace />} />
         
         {/* Protected routes with lazy loading */}
         <Route
@@ -54,7 +48,7 @@ function AppRoutes() {
           element={
             <ProtectedRoute>
               <EmailVerificationGuard>
-                <TradingDashboard />
+                <Dashboard />
               </EmailVerificationGuard>
             </ProtectedRoute>
           }
@@ -74,7 +68,7 @@ function AppRoutes() {
           element={
             <ProtectedRoute>
               <EmailVerificationGuard>
-                <TradeJournal />
+                <Dashboard />
               </EmailVerificationGuard>
             </ProtectedRoute>
           }
@@ -84,7 +78,7 @@ function AppRoutes() {
           element={
             <ProtectedRoute>
               <EmailVerificationGuard>
-                <PositionCalculator />
+                <Dashboard />
               </EmailVerificationGuard>
             </ProtectedRoute>
           }
@@ -124,7 +118,7 @@ function AppRoutes() {
           element={
             <ProtectedRoute>
               <EmailVerificationGuard>
-                <Referral />
+                <Dashboard />
               </EmailVerificationGuard>
             </ProtectedRoute>
           }
@@ -134,14 +128,14 @@ function AppRoutes() {
           element={
             <ProtectedRoute>
               <EmailVerificationGuard>
-                <ProfileSettings />
+                <Dashboard />
               </EmailVerificationGuard>
             </ProtectedRoute>
           }
         />
         
-        {/* Catch all - redirect to home */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        {/* Catch all */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   );

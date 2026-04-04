@@ -2,11 +2,14 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 
 serve(async (req: Request): Promise<Response> => {
-  const corsHeaders = {
+const corsHeaders = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
-  };
+};
+
+const METAAPI_PROVISIONING_BASE_URL =
+  Deno.env.get("METAAPI_PROVISIONING_BASE_URL") || "https://mt-provisioning-api-v1.agiliumtrade.ai";
 
   // ✅ Handle CORS Preflight Request
   if (req.method === "OPTIONS") {
@@ -80,7 +83,7 @@ serve(async (req: Request): Promise<Response> => {
     console.log("[metaapi-sync-accounts] ========== FETCHING METAAPI ACCOUNTS ==========");
     
     // Fetch all accounts from MetaAPI Cloud
-    const listAccountsUrl = "https://mt-provisioning-api-v1.agiliumtrade.ai/users/current/accounts";
+    const listAccountsUrl = `${METAAPI_PROVISIONING_BASE_URL}/users/current/accounts`;
     
     const listResponse = await fetch(listAccountsUrl, {
       method: "GET",
