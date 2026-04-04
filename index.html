@@ -34,9 +34,8 @@
       style-src 'self' 'unsafe-inline';
       img-src 'self' data: https:;
       font-src 'self' data:;
-      connect-src 'self' https://*.supabase.co https://www.google.com;
+      connect-src 'self' https: wss: ws:;
       frame-src 'self' https://www.google.com;
-      frame-ancestors 'self' https://*.mgx.dev;
       object-src 'none';
       base-uri 'self';
       form-action 'self'

@@ -38,21 +38,15 @@ export default defineConfig({
     },
   },
   server: {
-    port: 5173,
-    strictPort: false, // Allow fallback to next available port
+    port: 5000,
+    strictPort: true,
     host: '0.0.0.0',
+    allowedHosts: 'all',
     headers: {
       // Security Headers - Removed X-Frame-Options to allow iframe embedding
       'X-Content-Type-Options': 'nosniff',
       'Referrer-Policy': 'strict-origin-when-cross-origin',
       'Permissions-Policy': 'geolocation=(), microphone=(), camera=(), payment=()',
-    },
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3001',
-        changeOrigin: true,
-        secure: false,
-      },
     },
   },
   build: {
