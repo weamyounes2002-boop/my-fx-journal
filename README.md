@@ -22,6 +22,7 @@ Create a `.env` file in the root directory:
 ```env
 # MetaAPI Configuration
 METAAPI_TOKEN=your_metaapi_token_here
+MT_PASSWORD_ENCRYPTION_KEY=your_long_random_secret_here
 
 # Supabase Configuration
 VITE_SUPABASE_URL=your_supabase_url
