@@ -6,8 +6,13 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 // Check if Supabase is configured
 export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 
-// Create Supabase client
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Create Supabase client only when credentials are present, otherwise use a placeholder URL
+const PLACEHOLDER_URL = 'https://placeholder.supabase.co';
+const PLACEHOLDER_KEY = 'placeholder-key';
+export const supabase = createClient(
+  supabaseUrl || PLACEHOLDER_URL,
+  supabaseAnonKey || PLACEHOLDER_KEY
+);
 
 // Database Types
 export interface Account {
